@@ -63,6 +63,11 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+          command: [
+            'git add .',
+            'git commit -m "Push current iteration to live server"',
+            'git push live master'
+          ].join('&&')
       }
     },
   });
@@ -89,19 +94,20 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    //eslint test concat minify
+    'eslint', 'test', 'concat', 'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['shell']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
   grunt.registerTask('deploy', [
-    //run build then upload if build doesnt fail
+    'build', 'upload'
 
   ]);
 

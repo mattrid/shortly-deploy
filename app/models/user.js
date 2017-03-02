@@ -21,8 +21,6 @@ var User = db.Model.extend({
       });
   }
 });
-console.log('this is a test');
-console.log('this is a test');
-console.log('this is a test');
-console.log('this is a test');
+console.log('grunt testing');
+
 module.exports = User;

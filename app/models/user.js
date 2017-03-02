@@ -21,5 +21,5 @@ var User = db.Model.extend({
       });
   }
 });
-
+console.log('this is a test');
 module.exports = User;

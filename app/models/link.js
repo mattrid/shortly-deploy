@@ -1,11 +1,11 @@
 var db = require('../config');
 var bcrypt = require('bcrypt-nodejs');
+var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 
-var Schema = mongoose.Schema;
 
-var UrlSchema = new Schema ({
+var UrlSchema = mongoose.Schema({
 
   url: String,
   baseUrl: String,
@@ -14,16 +14,24 @@ var UrlSchema = new Schema ({
   visits: Number
 });
 
+var createSha = function(url) {
+  var shasum = crypto.createHash('sha1');
+  shasum.update(url);
+  return shasum.digest('hex').slice(0, 5);
+};
+
+UrlSchema.pre('save', function(next) {
+  var code = createSha(this.url);
+  this.code = code;
+  next();
+});
 
 var Link = mongoose.model('Link', UrlSchema);
 
 
-UrlSchema.pre('save', function(next) {
-  var shasum = crypto.createHash('sha1');
-  shasum.update(this.url);
-  this.code = shasum.digest('hex').slice(0, 5);
-  next();
-});
+
+
+
   
 
 module.exports = Link;

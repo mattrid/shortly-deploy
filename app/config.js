@@ -2,7 +2,9 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var bcrypt = require('bcrypt-nodejs');
 
-mongoose.connect('mongodb://localhost:27017');
+//make the mongoose connect to local host to run on local host, keep port 27017
+
+mongoose.connect('mongodb://138.197.211.144:27017');
 
 db = mongoose.connection;
 
